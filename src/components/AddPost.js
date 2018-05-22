@@ -48,8 +48,8 @@ class AddPost extends React.Component {
                 
             
             this.setState({ 
-                img_path: image_path.split('/').slice(1).join('/'),
-                username:username
+                username:username,
+                img_path: image_path.split('/').slice(1).join('/')
             
             })
            console.log(this.state);

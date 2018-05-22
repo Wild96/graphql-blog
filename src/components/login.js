@@ -27,57 +27,55 @@ class Login extends React.Component {
 
     }
     async signIn() {
-        try {
-            const userdata = await axios.post('http://localhost:3001/graphql', {
-                query:`query($username: String,$password: String){
+        const userdata = await axios.post('http://localhost:3001/graphql', {
+            query: `query($username: String,$password: String){
                          UserQuery(username: $username, password: $password) {
                             username,
                             password,
                             image_path
                             }       
                     }`, variables: {
-                    username: this.state.username,
-                    password: this.state.password
-                }
-            });
-            console.log("user data from login.js", userdata);
-            var image_path = userdata.data.data.UserQuery.image_path;
-            console.log("image_path",image_path);
+                username: this.state.username,
+                password: this.state.password
+            }
+        });
+        console.log("userquery result in login.js", userdata);
+        var image_path = userdata.data.data.UserQuery.image_path;
+        // console.log("data is null", userdata);
+        console.log("image_path from user query:", image_path);
+        const user_result = userdata.data.data.UserQuery;
+        console.log("userdata", user_result);
+        if (user_result == null) {
+            console.log("invalid user details");
+            console.log("user data is not fetched from query");
         }
-        catch (e) {
-            console.log("user data error", e);
-        }
-        try {
-            console.log("image_path of query:",image_path);
+        else {
+          console.log("imagepath inside else block:",image_path);
             const token_gen = await axios.post('http://localhost:3001/graphql', {
                 query: `mutation($username: String, $password: String,$image_path: String) {
-                    addToken(username: $username, password: $password, image_path: $image_path) {
-                      token,
-                      userData{
-                          username,
-                          password,
-                          image_path
-                      }
-                    }
-                  }`,
+                        addToken(username: $username, password: $password, image_path: $image_path) {
+                          userData{
+                              username,
+                              password,
+                              image_path
+                          },
+                          token
+                        }
+                      }`,
                 variables: {
                     username: this.state.username,
                     password: this.state.password,
-                    image_path: image_path
+                   image_path: image_path
                 }
             });
-            console.log("response from axios in login.js", token_gen);
+           console.log("response from axios in login.js", token_gen);
             var token = token_gen.data.data.addToken.token;
             console.log("token", token);
             this.Auth.setToken(token)
-            if (this.Auth.loggedIn()) {
-                this.props.history.replace('/home');
-            }
-
-        } catch (e) {
-            console.log("token gen error",e)    ;
         }
-
+        if (this.Auth.loggedIn()) {
+            this.props.history.replace('/home');
+        }
     }
 
     handleUsernameChange() {
