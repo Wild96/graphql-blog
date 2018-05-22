@@ -71,7 +71,7 @@ class home extends React.Component {
         let temp;
         const dataList = this.state.posts.map(a => {
             if(typeof a.image_path !== 'undefined'){
-              //  console.log("image_path",this.state);
+                console.log("image_path",this.state);
                temp = a.image_path.split('/').slice(1).join('/');
             }else{
                 temp = null;

@@ -5,9 +5,6 @@ import Authservice from './Authservice'
 import './index.css'
 import axios from 'axios';
 
-
-
-
 class Login extends React.Component {
     constructor(props) {
         super(props)
@@ -22,41 +19,63 @@ class Login extends React.Component {
     }
 
     componentWillMount() {
-        
-        
+
+
         if (this.Auth.loggedIn()) {
             this.props.history.replace('/home');
         }
-        
+
     }
     async signIn() {
         try {
-            // let response = await axios.post('http://localhost:3001', {
-            //     username: this.state.username,
-            //     password: this.state.password
-            // });
-            const response = await axios.post('http://localhost:3001/graphql',{ 
-                query:`mutation($username: String, $password: String) {
-                    addToken(username: $username, password: $password) {
-                      token
-                    }
-                  }`,
-                  variables: {
+            const userdata = await axios.post('http://localhost:3001/graphql', {
+                query:`query($username: String,$password: String){
+                         UserQuery(username: $username, password: $password) {
+                            username,
+                            password,
+                            image_path
+                            }       
+                    }`, variables: {
                     username: this.state.username,
                     password: this.state.password
                 }
-            });  
-            console.log("response from axios",response);    
-            var token = response.data.data.addToken.token;
-            console.log("token",token);            
-             this.Auth.setToken(token)       
-             if(this.Auth.loggedIn()){
-                 this.props.history.replace('/home');
-             }
-        
+            });
+            console.log("user data from login.js", userdata);
+            var image_path = userdata.data.data.UserQuery.image_path;
+            console.log("image_path",image_path);
+        }
+        catch (e) {
+            console.log("user data error", e);
+        }
+        try {
+            console.log("image_path of query:",image_path);
+            const token_gen = await axios.post('http://localhost:3001/graphql', {
+                query: `mutation($username: String, $password: String,$image_path: String) {
+                    addToken(username: $username, password: $password, image_path: $image_path) {
+                      token,
+                      userData{
+                          username,
+                          password,
+                          image_path
+                      }
+                    }
+                  }`,
+                variables: {
+                    username: this.state.username,
+                    password: this.state.password,
+                    image_path: image_path
+                }
+            });
+            console.log("response from axios in login.js", token_gen);
+            var token = token_gen.data.data.addToken.token;
+            console.log("token", token);
+            this.Auth.setToken(token)
+            if (this.Auth.loggedIn()) {
+                this.props.history.replace('/home');
+            }
+
         } catch (e) {
-            console.log(e);
-            alert(e);
+            console.log("token gen error",e)    ;
         }
 
     }

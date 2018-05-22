@@ -3,8 +3,6 @@ import './addpost.css'
 import axios from 'axios';
 import Authservice from './Authservice';
 
-
-
 class AddPost extends React.Component {
     constructor(props) {
         super(props);
@@ -21,17 +19,13 @@ class AddPost extends React.Component {
         this.titlechange = this.titlechange.bind(this);
         this.logout = this.logout.bind(this);
         this.homeroute = this.homeroute.bind(this);
-        // this.handleFileUpload = this.handleFileUpload.bind(this);
         this.Auth = new Authservice();
-      //this.getImage = this.getImage.bind(this);
     }
     
     async componentWillMount(){
         let token = this.Auth.getToken();
          console.log("token details:",token);
         try{
-            // const response = await axios.post("http://localhost:3001/getpic",{token: token});
-            // console.log("axios response:",response);
             const response = await axios.post("http://localhost:3001/graphql",{
                 query:`query($token: String){
                     TokenQuery(token:$token) {
@@ -83,34 +77,9 @@ class AddPost extends React.Component {
 
         )
     }
-    // handleFileUpload(e) {
-    //     switch (e.target.name) {
-    //         case 'post-image':
-    //             this.setState(Object.assign(this.state, { files: e.target.files }));
-    //             console.log("changed state values", this.state);
-    //             break;
-    //         default:
-    //             let update = {};
-    //             update[e.target.name] = e.target.value;
-    //             this.setState(Object.assign(this.state, update));
-    //     }
-    // }
+
   async sendcontent() {
         try {
-
-            // let token_id = this.Auth.getToken();
-            // const data = new FormData();
-            // data.append("title", this.state.title);
-            // data.append("postcontent", this.state.postcontent);
-            // //data.append("files", this.state.files[0]);
-            // data.append("token_id",token_id);
-            // var config = {
-            //     headers: { 'content-type': 'multipart/form-data' }
-            // }
-            // axios.post("http://localhost:3001/AddPost", data, config)
-            // .then(function (response) {
-            //     console.log("response sent by axios :", response);
-            // });
             console.log("state values before sending:",this.state);
             const response = await axios.post("http://localhost:3001/graphql",{
                 query : `mutation($title:String,$postcontent:String,$username: String) {

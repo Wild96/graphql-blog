@@ -3,7 +3,7 @@ const {  GraphQLObjectType, GraphQLString, } = require( 'graphql');
 var GraphQLDate = require('graphql-date');
 const Tokentype = require('./token');
 const TokenObjectType = Tokentype.TokenObjectType;
-const UserObjectType = Tokentype.userObjectType;
+const userObjectType = Tokentype.userObjectType;
 
 describe('Token type testcase',()=>{
     it('should have a token field',()=>{
@@ -16,6 +16,6 @@ describe('Token type testcase',()=>{
     });
     // it('should have a userdata field',()=>{
     //     expect(TokenObjectType.getFields()).to.have.property('userData');
-    //     expect(TokenObjectType.getFields().userData.type).to.deep.equals(UserObjectType);
+    //     expect(TokenObjectType.getFields().userData.type).to.deep.equals(userObjectType);
     // });
 });

@@ -14,7 +14,7 @@ class Profilepic extends React.Component{
         switch (e.target.name) {
             case 'selectedFile':
                 this.setState(Object.assign(this.state, { files: e.target.files }));
-                console.log("current values", this.state);
+                console.log("profilepic state change", this.state);
                 break;
             default: 
                 let update = {};
@@ -25,7 +25,7 @@ class Profilepic extends React.Component{
     async upload(){
         const fd = new FormData( )
         fd.append('files', this.state.files[0]);
-            console.log("state values :",this.state);
+            console.log("state values inside upload :",this.state);
             const config = {
                 headers: { 'content-type': 'multipart/form-data' }
             }

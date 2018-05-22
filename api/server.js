@@ -54,22 +54,31 @@ app.post('/profilepic/:username',upload.single('files'), (req, res) => {
             console.log("cant update:",err);
         }
         else{
-            console.log("response",response);
+            console.log(" profile pic response",response);
         }
     });
 
 })
 app.post('/postpic/:post_title',post_upload.single('files'),(req,res)=>{
-    console.log("post tile:",req.params.post_title);
     var post_title = req.params.post_title;
+    console.log("post tile:",post_title);
     var file_path =req.file.path
     console.log("File:",file_path);
-    Post.findOneAndUpdate({title:post_title},{$set:{image_path:file_path}},function(err,response){
+    
+     Post.findOneAndUpdate({title:post_title},{$set:{image_path:file_path}},function(err,response){
         if(err){
-            console.log("cant update post collection:",err);
-        }
-        console.log("post collection updated",response);
+            console.log("error",err);
+        }    
+        console.log("post update response",response)
     });
+        
+        
+    // Post.findOneAndUpdate({title:post_title},{$set:{image_path:file_path}},function(err,response){
+    //     if(err){
+    //         console.log("cant update post collection:",err);
+    //     }
+    //     console.log("post collection updated",response);
+    // });
 
 })
 

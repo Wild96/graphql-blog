@@ -41,19 +41,6 @@ class Signup extends React.Component {
 
    async signUp(){        
         try {
-            // const fd = new FormData( )
-            // fd.append('username',this.state.username);
-            // fd.append('password',this.state.password);
-            // fd.append('files', this.state.files[0]);
-            // console.log("state values :",this.state);
-            // const config = {
-            //     headers: { 'content-type': 'multipart/form-data' }
-            // }
-            // // axios.post('http://localhost:3001/Signup',fd, config)
-            // .then(function (response) {
-            //     console.log("response sent by axios :", response);
-            // });
-            // axios.post(`http://localhost:3001/upload/${this.state.username}`, fd);
           const userdetails = await axios.post('http://localhost:3001/graphql',{ 
                 query : `mutation($username: String, $password: String) {
                     addUser(username: $username, password: $password) {
@@ -65,14 +52,11 @@ class Signup extends React.Component {
                       password: this.state.password
                   }
                 });
-          //  console.log("user details:",userdetails.data.data.addUser.username);
+          //console.log("user details:",userdetails.data.data.addUser.username);
             var username = userdetails.data.data.addUser.username;
             //console.log("username",username);
             this.props.history.push("/profilepic/"+username);
-            // }).then(function(response){
-            //         console.log("axios response for signup route",response);
-            //         console.log("username",response.data.data.addUser.username);
-            //     }).catch(err => { console.log(err); });
+            
         } catch (e) {
             console.log(e);
         }
@@ -95,10 +79,6 @@ class Signup extends React.Component {
                             onChange={this.handlePasswordChange}
                             id="password" placeholder="Enter your password" />
                     </li>
-                    <li>
-                        <input type="file" name="selectedFile" onChange={this.handleFileUpload} />
-                    </li>
-
                     <li>
                         <button type="submit" onClick={this.signUp}>Signup</button>
                     </li>

@@ -11,6 +11,7 @@ module.exports={
         args:{
             username:{type: GraphQLString},
             password:{type: GraphQLString},
+            image_path:{type: GraphQLString}
         },
         resolve: async(parentValue,args)=>{
             try{
@@ -20,7 +21,7 @@ module.exports={
                     userData:{
                         username:args.username,
                         password:args.password,
-                        image_path:""
+                        image_path:args.image_path
                     },
                     token: token_gen
                 });
