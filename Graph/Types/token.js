@@ -1,13 +1,6 @@
 const { GraphQLString, GraphQLInputObjectType, GraphQLObjectType } = require('graphql');
 var GraphQLDate = require('graphql-date');
-const userInputType = new GraphQLInputObjectType({
-    name: 'userInputType ',
-    fields: () => ({
-        username: { type: GraphQLString },
-        password: { type: GraphQLString },
-        image_path: { type: GraphQLString }
-    })
-});
+
 const TokenInputType = new GraphQLInputObjectType({
     name: 'TokenInputType',
     fields: () => ({
@@ -17,20 +10,29 @@ const TokenInputType = new GraphQLInputObjectType({
     }),
 
 });
-const userObjectType = new GraphQLObjectType({
-    name: 'userObjectType',
+const userInputType = new GraphQLInputObjectType({
+    name: 'userInputType ',
     fields: () => ({
         username: { type: GraphQLString },
         password: { type: GraphQLString },
         image_path: { type: GraphQLString }
     })
 });
+
 const TokenObjectType = new GraphQLObjectType({
     name: 'TokenObjectType',
     fields: () => ({
         token: { type: GraphQLString },
         date: { type: GraphQLDate },
         userData: { type: userObjectType }
+    })
+});
+const userObjectType = new GraphQLObjectType({
+    name: 'userObjectType',
+    fields: () => ({
+        username: { type: GraphQLString },
+        password: { type: GraphQLString },
+        image_path: { type: GraphQLString }
     })
 });
 module.exports = { TokenInputType,TokenObjectType}

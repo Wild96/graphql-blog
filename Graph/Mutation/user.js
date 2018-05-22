@@ -13,7 +13,7 @@ module.exports={
         },
         resolve: async (parentValues,args)=>{
             try{
-                console.log("args from signup",args);
+                console.log("args from user mutation",args);
                 const newuser = new UserModel(args);
                 return await newuser.save();
                           

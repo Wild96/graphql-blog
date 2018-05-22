@@ -20,7 +20,7 @@ module.exports={
                     userData:{
                         username:args.username,
                         password:args.password,
-                        image_path:"Xayah-Rakan-Promo-Teaser-HD-Wallpaper-Official-Artwork-League-of-Legends-lol-400x400.jpg"
+                        image_path:""
                     },
                     token: token_gen
                 });

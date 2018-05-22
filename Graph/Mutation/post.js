@@ -9,7 +9,7 @@ module.exports = {
             title:{type: GraphQLString},
             postcontent:{type: GraphQLString},
             username:{type: GraphQLString},
-            img_path:{type:GraphQLString}
+            image_path:{type:GraphQLString}
         },
         resolve: async(parentValue,args)=>{
             try{

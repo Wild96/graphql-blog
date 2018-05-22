@@ -1,4 +1,4 @@
-require('../models/global');
+require('../models/index');
 const express = require('express');
 const expressGraphQL = require('express-graphql');
 const app = express();
