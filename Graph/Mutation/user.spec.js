@@ -11,12 +11,6 @@ var testData = {
 }
 
 describe('UserMutations', () => {
-    // beforeEach(async () => {
-    //     mongoose.Promise = global.Promise;
-    //     mongoose.connect("mongodb://localhost:27017/blog")
-    //         .then(() => console.log('Succesfully connected to blog database'))
-    //         .catch((err) => console.error(err));
-    // });
     it('must add user', async() => {
         const addBody = {
             query: `mutation{
@@ -50,9 +44,4 @@ describe('UserMutations', () => {
             });
 
     });
-    // afterEach((done) => {
-    //     // mongoose.connection.db.dropDatabase(() => {
-    //     //     mongoose.connection.close(done());
-    //     // });
-    // });
 });
