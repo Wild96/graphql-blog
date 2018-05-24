@@ -15,8 +15,7 @@ module.exports={
             try{
                 console.log("args from user mutation",args);
                 const newuser = new UserModel(args);
-                return await newuser.save();
-                          
+                return await newuser.save();       
             }   
             catch(e){
                 console.log("error",e)

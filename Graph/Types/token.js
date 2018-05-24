@@ -35,4 +35,4 @@ const userObjectType = new GraphQLObjectType({
         image_path: { type: GraphQLString }
     })
 });
-module.exports = { TokenInputType,TokenObjectType}
+module.exports = { TokenInputType,TokenObjectType,userObjectType}

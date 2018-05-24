@@ -14,8 +14,8 @@ describe('Token type testcase',()=>{
         expect(TokenObjectType.getFields()).to.have.property('date');
         expect(TokenObjectType.getFields().date.type).to.deep.equals(GraphQLDate);
     });
-    // it('should have a userdata field',()=>{
-    //     expect(TokenObjectType.getFields()).to.have.property('userData');
-    //     expect(TokenObjectType.getFields().userData.type).to.deep.equals(userObjectType);
-    // });
+    it('should have a userdata field',()=>{
+        expect(TokenObjectType.getFields()).to.have.property('userData');
+        expect(TokenObjectType.getFields().userData.type).to.deep.equals(userObjectType);
+    });
 });

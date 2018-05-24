@@ -1,12 +1,12 @@
-require('../models/index');
+require('../Graph/models/index');
 const express = require('express');
 const expressGraphQL = require('express-graphql');
 const app = express();
 const Schema = require('../Graph/Schema');
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
-const User = require("../models/user");
-const Post = require("../models/post");
+const User = require("../Graph/models/user");
+const Post = require("../Graph/models/post");
 const cors = require('cors');
 const multer = require('multer');
 

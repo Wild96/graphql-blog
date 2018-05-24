@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
 var tokenSchema = new Schema({
     token: String,
     userData: Object,
@@ -8,5 +9,5 @@ var tokenSchema = new Schema({
             default: Date.now()
         }
 });
- var  token = mongoose.model('token', tokenSchema);
-module.exports =  token ;
+ 
+module.exports =  mongoose.model('token', tokenSchema);
