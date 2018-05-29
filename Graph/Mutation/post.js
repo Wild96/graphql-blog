@@ -13,11 +13,12 @@ module.exports = {
         },
         resolve: async(parentValue,args)=>{
             try{
-                console.log(args);
+               // console.log("Token in post mutation:",token);
                 const newpost = new PostModel(args);
                 const data = await newpost.save();
                 console.log(data);
                 return data;
+            
             }
             catch(e){
                 console.log("post creation error",e);

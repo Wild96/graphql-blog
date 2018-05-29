@@ -11,7 +11,7 @@ module.exports={
             username:{type: GraphQLString},
             password:{type: GraphQLString}
         },
-        resolve: async (parentValues,args)=>{
+        resolve: async (parentValues,args,token)=>{
             try{
                 console.log("args from user mutation",args);
                 const newuser = new UserModel(args);

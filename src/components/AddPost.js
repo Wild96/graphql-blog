@@ -9,10 +9,8 @@ class AddPost extends React.Component {
         this.state = {
             title: " ",
             postcontent: " ",
-           // files: null,
-            img_path:null,
-            username:null
-
+            img_path: null,
+            username: null
         };
         this.contentchange = this.contentchange.bind(this);
         this.sendcontent = this.sendcontent.bind(this);
@@ -21,41 +19,40 @@ class AddPost extends React.Component {
         this.homeroute = this.homeroute.bind(this);
         this.Auth = new Authservice();
     }
-    
-    async componentWillMount(){
+    async componentWillMount() {
         let token = this.Auth.getToken();
-         console.log("token details:",token);
-        try{
-            const response = await axios.post("http://localhost:3001/graphql",{
-                query:`query($token: String){
+        console.log("token details:", token);
+        try {
+            const response = await axios.post("http://localhost:3001/graphql", {
+                query: `query($token: String){
                     TokenQuery(token:$token) {
                       userData {
                         username
                         image_path
                       }
                     }
-                  }`,variables:{
-                      token : token
-                  }
-                });
-                console.log("response for add post",response);
-                var userData = response.data.data.TokenQuery.userData;
-                console.log("userData",userData);
-                var username = userData.username;
-                var image_path = userData.image_path;
-                console.log("username:",username);
-                console.log("profilepic",image_path);
-                
-            
-            this.setState({ 
-                username:username,
+                  }`, variables: {
+                    token: token
+                }
+            });
+            console.log("response for add post", response);
+            var userData = response.data.data.TokenQuery.userData;
+            console.log("userData", userData);
+            var username = userData.username;
+            var image_path = userData.image_path;
+            console.log("username:", username);
+            console.log("profilepic", image_path);
+
+
+            this.setState({
+                username: username,
                 img_path: image_path.split('/').slice(1).join('/')
-            
+
             })
-           console.log(this.state);
+            console.log(this.state);
         }
-        catch(e){
-            console.log("error",e);
+        catch (e) {
+            console.log("error", e);
         }
     }
 
@@ -78,31 +75,41 @@ class AddPost extends React.Component {
         )
     }
 
-  async sendcontent() {
+    async sendcontent() {
         try {
-            console.log("state values before sending:",this.state);
-            const response = await axios.post("http://localhost:3001/graphql",{
-                query : `mutation($title:String,$postcontent:String,$username: String) {
+            let token = this.Auth.getToken();
+            console.log("send content token details:", token);
+            console.log("state values before sending:", this.state);
+            if (token != null) {
+                console.log("Token is valid ");
+                const response = await axios.post("http://localhost:3001/graphql", {
+                    query: `mutation($title:String,$postcontent:String,$username: String) {
                     addPost(title:$title,postcontent:$postcontent,username: $username) {
                       title,
                       postcontent,
                       username
                     }
                   }`,
-                  variables: {
-                    title:this.state.title,
-                    postcontent:this.state.postcontent,  
-                    username: this.state.username,
-                  }
+                    variables: {
+                        title: this.state.title,
+                        postcontent: this.state.postcontent,
+                        username: this.state.username,
+                    }
+                }, {headers:{Authorization:token}
             });
-            console.log("response:",response);
-            var title = response.data.data.addPost.title;
-            this.props.history.push("/AddPostPic/"+title);
+               // console.log("response:", response);
+               console.log("response is sent");
+                var title = response.data.data.addPost.title;
+                this.props.history.push("/AddPostPic/" + title);
+            }
+            else {
+                console.log("invalid token request a new one");
+            }
         }
         catch (error) {
-            console.log("Error while seding to server",error);
+            console.log("Error while seding to server", error);
         };
-        
+
     }
     render() {
         return (
@@ -115,10 +122,10 @@ class AddPost extends React.Component {
                 </div>
                 <div className="content">
                     <div>
-                    <p>Active user : {this.state.username}</p>
-                    Profile pic:
+                        <p>Active user : {this.state.username}</p>
+                        Profile pic:
                         <img src={this.state.img_path} alt=" profile pic" />
-                       
+
                     </div>
                     <h1> Create post </h1>
                     <div >
